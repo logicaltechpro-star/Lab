@@ -1,0 +1,14 @@
+{
+  "topic": "Recovering a hidden password (the answer is unlock42)",
+  "facts": [
+    {"kind": "run", "args": ["unlock42"], "stdout": "Access granted\n", "exit_code": 0},
+    {"kind": "run", "args": ["unlock43"], "stdout": "Access denied\n", "exit_code": 1},
+    {"kind": "run", "args": ["unlock4"], "stdout": "Access denied\n", "exit_code": 1},
+    {"kind": "run", "args": [], "stdout": "usage: crackme <password>\n", "exit_code": 2},
+    {"kind": "strings_present", "values": ["Access granted", "Access denied"]},
+    {"kind": "strings_absent", "level": "O0", "values": ["unlock42"]},
+    {"kind": "strings_present", "toolchain": "gcc", "level": "O2", "values": ["unlock42"]},
+    {"kind": "disasm", "toolchain": "gcc", "level": "O0", "function": "check",
+     "contains": ["xor\\s+.*0x5a"]}
+  ]
+}

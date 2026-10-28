@@ -1,0 +1,31 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": { "major": 3, "minor": 25, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "linux-gcc",
+      "displayName": "Linux GCC (ELF samples, full facts)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": { "CMAKE_CXX_COMPILER": "g++" },
+      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
+    },
+    {
+      "name": "msvc",
+      "displayName": "Windows MSVC x64 (PE samples)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": { "CMAKE_CXX_COMPILER": "cl" },
+      "architecture": { "value": "x64", "strategy": "external" },
+      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "linux-gcc", "configurePreset": "linux-gcc" },
+    { "name": "msvc", "configurePreset": "msvc" }
+  ],
+  "testPresets": [
+    { "name": "linux-gcc", "configurePreset": "linux-gcc", "output": { "outputOnFailure": true, "verbosity": "verbose" } },
+    { "name": "msvc", "configurePreset": "msvc", "output": { "outputOnFailure": true, "verbosity": "verbose" } }
+  ]
+}
