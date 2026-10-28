@@ -1,0 +1,12 @@
+{
+  "topic": "How C++ exceptions are compiled",
+  "facts": [
+    {"kind": "run", "stdout": "1234 -> 10\n12x4 -> error: not a digit at column 2\n", "exit_code": 1},
+    {"kind": "strings_present", "values": ["not a digit"]},
+    {"kind": "sections", "toolchain": "gcc", "values": [".text", ".eh_frame", ".gcc_except_table"]},
+    {"kind": "sections", "toolchain": "msvc", "values": [".text", ".pdata"]},
+    {"kind": "symbols", "toolchain": "gcc", "values": ["typeinfo for ParseError", "vtable for ParseError"]},
+    {"kind": "disasm", "toolchain": "gcc", "level": "O0", "function": "parse_digit",
+     "contains": ["call\\s+.*__cxa_allocate_exception", "call\\s+.*__cxa_throw"]}
+  ]
+}

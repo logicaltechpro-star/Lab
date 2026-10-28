@@ -1,0 +1,15 @@
+{
+  "topic": "Virtual functions, vtables and RTTI",
+  "facts": [
+    {"kind": "run", "stdout": "circle 12.0\nsquare 9.0\ntotal 21.0 squares 1\n", "exit_code": 0},
+    {"kind": "strings_present", "values": ["circle", "square"]},
+    {"kind": "symbols", "toolchain": "gcc",
+     "values": ["vtable for Circle", "vtable for Square", "typeinfo for Shape", "typeinfo for Circle", "typeinfo for Square"]},
+    {"kind": "disasm", "toolchain": "gcc", "function": "main",
+     "contains": ["call\\s+.*__dynamic_cast"]},
+    {"kind": "disasm", "toolchain": "gcc", "level": "O0", "function": "main",
+     "contains": ["call\\s+r[a-z0-9]+$"]},
+    {"kind": "disasm", "toolchain": "gcc", "level": "O2", "function": "main",
+     "contains": ["call\\s+QWORD PTR \\[r[a-z0-9]+\\+0x10\\]", "call\\s+QWORD PTR \\[r[a-z0-9]+\\+0x18\\]"]}
+  ]
+}

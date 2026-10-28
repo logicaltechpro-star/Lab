@@ -1,0 +1,12 @@
+{
+  "topic": "Inlining and constant folding at O0 vs O2",
+  "facts": [
+    {"kind": "run", "stdout": "sum_to(100) = 5050\nsum_to(runtime) = 55\n", "exit_code": 0},
+    {"kind": "disasm", "toolchain": "gcc", "level": "O0", "function": "main",
+     "contains": ["call\\s+[0-9a-f]+ <sum_to\\(int\\)>"], "absent": ["0x13ba"]},
+    {"kind": "disasm", "toolchain": "gcc", "level": "O0", "function": "sum_to",
+     "contains": ["^[0-9a-f]+:\\s+j"]},
+    {"kind": "disasm", "toolchain": "gcc", "level": "O2", "function": "main",
+     "contains": ["0x13ba"], "absent": ["sum_to"]}
+  ]
+}
